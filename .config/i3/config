@@ -4,7 +4,7 @@
 #exec_always setxkbmap -layout us,ru &
 #exec_always setxkbmap -option 'grp:alt_shift_toggle' &
 exec --no-startup-id nm-applet >/dev/null &
-exec_always --no-startup-id feh -x --bg-scale "~/pictures/bg.jpg" &
+exec_always --no-startup-id feh -x --bg-scale ~/pictures/bg.jpg &
 exec_always --no-startup-id ~/.config/polybar/launch.sh >/dev/null &
 exec --no-startup-id onboard &
 exec_always --no-startup-id picom &
