@@ -1,0 +1,21 @@
+#!/bin/bash
+
+poweroff="襤"
+reboot="勒"
+lock=""
+logout=""
+
+options="$poweroff\n$reboot\n$lock"
+chosen="$(echo -e $options | rofi -dmenu -theme ~/.config/rofi/style.rasi)"
+
+case $chosen in
+	$poweroff)
+		sudo poweroff
+	;;
+	$reboot)
+		sudo reboot
+	;;
+	$lock)
+		python3 lock.py
+	;;
+esac

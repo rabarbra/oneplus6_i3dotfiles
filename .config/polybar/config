@@ -1,0 +1,179 @@
+#----------------------------- Colors ----------------------------------------#
+[color]
+bg = #00000000
+fg = #EAEAEA
+fg-alt = #9C9C9C
+
+trans = #00000000
+white = #FFFFFF
+black = #000000
+
+red = #e53935
+pink = #d81b60
+purple = #8e24aa
+deep-purple = #5e35b1
+indigo = #3949ab
+blue = #1e88e5
+light-blue = #039be5
+cyan = #00acc1
+teal = #00897b
+green = #43a047
+light-green = #7cb342
+lime = #c0ca33
+yellow = #fdd835
+amber = #ffb300
+orange = #fb8c00
+deep-orange = #f4511e
+brown = #6d4c41
+grey = #757575
+blue-gray = #546e7a
+
+#----------------------------- Bars ------------------------------------------#
+[bar/root]
+height = 80
+font-0 = "Droid Sans:size=26:weight=regular;2"
+font-1 = "Iosevka Nerd Font:size=38;2"
+font-2 = "SourceCodePro Nerd Font:style=Medium:size=40;2"
+background = ${color.bg}
+foreground = ${color.fg}
+
+[bar/left]
+inherit = bar/root
+width = 50%
+override-redirect = true
+modules-left = date i3 add_workspace
+radius = 1.0
+
+[bar/right]
+inherit = bar/root
+width = 50%
+offset-x = 50% 
+override-redirect = true
+modules-right = bottom menu lock poweroff
+radius = 1.0
+tray-position = right
+tray-maxsize = 46
+tray-transparent = false
+tray-background = ${color.bg}
+tray-scale = 0.9
+
+[bar/bottom]
+inherit = bar/root
+width = 100%
+override-redirect = false
+modules-left = memory
+modules-center = i3 add_workspace
+modules-right = keyboard menu copy paste bottom kill
+fixed-center = true
+radius = 1.0
+bottom = true
+enable-ipc = true
+
+#----------------------------- Modules ---------------------------------------#
+[module/date]
+type = internal/date
+date = %Y-%m-%d%
+time = "  %H:%M "
+label = %time%
+
+[module/bottom]
+type = custom/text
+content = "    "
+click-left = polybar-msg cmd toggle &
+
+[module/memory]
+type = internal/memory
+interval = 3
+format = <label>
+label = "  %gb_used%"
+
+[module/i3]
+type = internal/i3
+format = <label-state>
+
+label-focused = %index%
+label-focused-foreground = ${color.fg}
+label-focused-background = ${color.bg}
+label-focused-underline = #fba922
+label-focused-padding = 1
+
+label-unfocused = %index%
+label-unfocused-padding = 1
+label-unfocused-foreground = ${color.fg-alt}
+
+[module/add_workspace]
+type = custom/text
+content = " +"
+content-foreground = ${color.fg}
+click-left = exec i3-msg workspace $(($(i3-msg -t get_workspaces | tr , '\n' | grep '"num":' | cut -d : -f 2 | sort -rn | head -1) + 1)) &
+
+[module/keyboard]
+type = custom/text
+content = "    "
+click-left = dbus-send --type=method_call --dest=org.onboard.Onboard /org/onboard/Onboard/Keyboard org.onboard.Onboard.Keyboard.ToggleVisible &
+
+[module/menu]
+type = custom/text
+content = "    "
+click-left = ~/.config/rofi/apps_menu 2&> /dev/null &
+
+[module/copy]
+type = custom/text
+content = "    "
+click-left = xdotool key "ctrl+Insert" &
+
+[module/paste]
+type = custom/text
+content = "     "
+click-left = xdotool key "Shift+Insert" &
+
+[module/kill]
+type = custom/text
+content = "     "
+click-left = i3 kill 
+
+[module/poweroff]
+type = custom/text
+content = "  襤  " 
+click-left = exec sudo halt &
+
+[module/lock]
+type = custom/text
+content = "    "
+click-left = python3 ~/.config/rofi/lock.py &
+
+[module/battery]
+type = internal/battery
+full-at = 99
+battery = bq27541-0
+poll-interval = 5
+format-charging = "<label-charging> "
+format-full = "<label-full> "
+format-discharging = "<label-discharging> "
+
+label-charging = up %percentage%%
+label-discharging = down %percentage%%
+lebel-full = %percentage%%
+
+[module/cpu]
+type = internal/cpu
+interval = 0.5
+format = <label>
+label = " %percentage-sum%% "
+
+[module/filesystem]
+type = internal/fs
+mount-0 = /
+interval = 10
+format-mounted = <label-mounted>
+label-mounted = %free%
+
+#----------------------------- Settings --------------------------------------#
+[settings]
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+pseudo-transparency = false
