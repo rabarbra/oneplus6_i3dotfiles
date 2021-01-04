@@ -31,12 +31,22 @@ DEEP_ORANGE="#f4511e"
 LIGHT_BLUE="#039be5"
 LIGHT_GREEN="#7cb342"
 
+#APPS=$(ls /usr/share/applications | wc -l)
+#if [ "$(( APPS % 2 ))" -eq 0 ]
+#then
+#	let "LINES=APPS/2"
+#else
+#	let "LINES=APPS/2+1"
+#fi
+#LINES=$(echo "$(ls /usr/share/applications | wc -l) / 2" | bc)
+LINES=16
+
 rofi -no-lazy-grab -modi drun -show drun \
 -display-drun "Apps :" -drun-display-format "{name}" \
 -hide-scrollbar true \
 -sort \
 -bw 0 \
--lines 11 \
+-lines $LINES \
 -line-padding 8 \
 -padding 20 \
 -width 100% \

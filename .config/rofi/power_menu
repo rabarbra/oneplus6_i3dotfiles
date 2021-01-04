@@ -4,8 +4,9 @@ poweroff="襤"
 reboot="勒"
 lock=""
 logout=""
+screenshot=""
 
-options="$poweroff\n$reboot\n$lock"
+options="$poweroff\n$reboot\n$lock\n$screenshot"
 chosen="$(echo -e $options | rofi -dmenu -theme ~/.config/rofi/style.rasi)"
 
 case $chosen in
@@ -13,9 +14,12 @@ case $chosen in
 		sudo poweroff
 	;;
 	$reboot)
-		sudo reboot
+		sudo halt
 	;;
 	$lock)
 		python3 lock.py
+	;;
+	$screenshot)
+		scrot ~/pictures/screenshots/%Y-%m-%d-%T.png &
 	;;
 esac
