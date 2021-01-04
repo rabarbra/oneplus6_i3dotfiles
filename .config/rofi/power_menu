@@ -11,7 +11,7 @@ chosen="$(echo -e $options | rofi -dmenu -theme ~/.config/rofi/style.rasi)"
 
 case $chosen in
 	$poweroff)
-		sudo poweroff
+		sudo halt
 	;;
 	$reboot)
 		sudo halt
